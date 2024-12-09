@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
     const navigate = useNavigate();
+    const username = localStorage.getItem('username')
 
     useEffect(() => {
 
@@ -33,7 +34,7 @@ const Dashboard = () => {
 
     return (
         <div className='w-full h-[80%] flex justify-center items-center'>
-            <h1>Admin Dashboard</h1>
+            <h1>Welcome {username}, Admin Panel</h1>
 
         </div>
     );

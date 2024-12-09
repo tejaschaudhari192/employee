@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const EditEmployee = () => {
-    const { id } = useParams(); 
+    const { id } = useParams();
     const navigate = useNavigate();
 
     const [employee, setEmployee] = useState({
@@ -15,8 +15,8 @@ const EditEmployee = () => {
         course: [],
         image: null
     });
-    const [previewImage, setPreviewImage] = useState(''); 
-    const [errors, setErrors] = useState({ email: '', mobile: '', gender: '', course: '' });  
+    const [previewImage, setPreviewImage] = useState('');
+    const [errors, setErrors] = useState({ email: '', mobile: '', gender: '', course: '' });
 
     const token = localStorage.getItem('token');
     useEffect(() => {
@@ -39,7 +39,7 @@ const EditEmployee = () => {
                     course: employeeData.course || [],
                     image: null
                 });
-                setPreviewImage(employeeData.image);  
+                setPreviewImage(employeeData.image);
             } catch (err) {
                 console.error('Error fetching employee data:', err);
                 navigate('/login')
@@ -61,9 +61,9 @@ const EditEmployee = () => {
         const { value, checked } = e.target;
         let updatedCourses = [...employee.course];
         if (checked) {
-            updatedCourses.push(value);  
+            updatedCourses.push(value);
         } else {
-            updatedCourses = updatedCourses.filter((course) => course !== value);  
+            updatedCourses = updatedCourses.filter((course) => course !== value);
         }
         setEmployee((prevState) => ({
             ...prevState,
@@ -78,7 +78,7 @@ const EditEmployee = () => {
                 ...prevState,
                 image: file
             }));
-            setPreviewImage(URL.createObjectURL(file)); 
+            setPreviewImage(URL.createObjectURL(file));
         } else {
             alert('Only jpg/png files are allowed');
         }
@@ -96,46 +96,46 @@ const EditEmployee = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         setErrors({ email: '', mobile: '', gender: '', course: '' });
-    
+
         let isValid = true;
-    
+
         if (!validateEmail(employee.email)) {
             setErrors((prevState) => ({ ...prevState, email: 'Invalid email format' }));
             isValid = false;
         }
-    
+
         if (!validateMobile(employee.mobile)) {
             setErrors((prevState) => ({ ...prevState, mobile: 'Mobile number must be 10 digits' }));
             isValid = false;
         }
-    
+
         if (!employee.gender) {
             setErrors((prevState) => ({ ...prevState, gender: 'Please select a gender' }));
             isValid = false;
         }
-    
+
         if (employee.course.length === 0) {
             setErrors((prevState) => ({ ...prevState, course: 'Please select at least one course' }));
             isValid = false;
         }
-    
-        if (!isValid) return;  
-    
+
+        if (!isValid) return;
+
         const formData = new FormData();
-        
+
         formData.append('name', employee.name);
         formData.append('email', employee.email);
         formData.append('mobile', employee.mobile);
         formData.append('designation', employee.designation);
         formData.append('gender', employee.gender);
-        formData.append('course', employee.course.join(','));  
-    
+        formData.append('course', employee.course.join(','));
+
         if (employee.image) {
-            formData.append('image', employee.image);  
+            formData.append('image', employee.image);
         }
-    
+
         try {
             await axios.put(`http://localhost:5000/api/employees/update/${id}`, formData, {
                 headers: {
@@ -146,10 +146,14 @@ const EditEmployee = () => {
             alert('Employee updated successfully');
             navigate('/employees');
         } catch (err) {
+            if (err.response.status) {
+                setErrors((prevState) => ({ ...prevState, email: 'Email already in use' }));
+
+            }
             console.error('Error updating employee:', err);
         }
     };
-    
+
 
     return (
         <form onSubmit={handleSubmit} className="max-w-md mx-auto p-8 mt-20 shadow-md rounded-lg">

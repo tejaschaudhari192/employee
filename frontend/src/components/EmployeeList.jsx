@@ -76,7 +76,7 @@ const EmployeeList = () => {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
-        <div className="p-8 mt-10 min-h-screen">
+        <div className="p-8 mt-16 min-h-screen">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-3xl font-bold text-indigo-600">Employee List</h2>
                 <Link

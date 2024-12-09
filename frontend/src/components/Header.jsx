@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+import logo from '../assets/logo.png'
 const Header = () => {
     const username = localStorage.getItem('username');
     const navigate = useNavigate();
@@ -12,7 +13,8 @@ const Header = () => {
     };
 
     return (
-        <header className="fixed p-5 h-fit top-0 inset-x-0 w-full bg-gray-900 text-white z-10 shadow-md">
+        <header className="fixed p-5 h-fit top-0 inset-x-0 w-full dark:bg-gray-900 text-white z-10 shadow-md">
+        <img className='w-10' src={logo}></img>
             <nav className="container mx-auto">
                 <ul className="flex justify-between items-center">
                     <li className="text-xl font-bold">
@@ -21,7 +23,7 @@ const Header = () => {
                     <li className="text-xl font-bold">
                         <Link to="/employees" className="hover:text-blue-500">Employee List</Link>
                     </li>
-                    <li className="text-lg">
+                    <li className="text-lg text-blue-500">
                         <span className="font-semibold">Username: </span>{username}
                     </li>
                     <li 

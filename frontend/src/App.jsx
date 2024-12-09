@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, useParams } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
 import EmployeeList from './components/EmployeeList';
@@ -10,9 +10,6 @@ import Header from './components/Header';
 import ErrorPage from './components/Error';
 
 function App() {
-    
-
-    
 
     return (
         <div className='w-screen h-screen p-8'>
